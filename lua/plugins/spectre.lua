@@ -8,10 +8,10 @@ return {
       "folke/tokyonight.nvim",
     },
     config = function()
-      local theme = require("tokyonight.palettes").get_palette("storm")
+      local theme = require("tokyonight.colors").default
 
-      vim.api.nvim_set_hl(0, "SpectreSearch", { bg = theme.red, fg = theme.base })
-      vim.api.nvim_set_hl(0, "SpectreReplace", { bg = theme.green, fg = theme.base })
+      vim.api.nvim_set_hl(0, "SpectreSearch", { bg = theme.red, fg = theme.bg })
+      vim.api.nvim_set_hl(0, "SpectreReplace", { bg = theme.green, fg = theme.bg })
 
       require("spectre").setup({
         highlight = {
