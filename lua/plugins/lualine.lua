@@ -22,7 +22,7 @@ return {
 
       require("lualine").setup({
         options = {
-          theme = "tokyonight",
+          theme = "bluloco",
           globalstatus = true,
           component_separators = { left = "█", right = "█" },
           section_separators = { left = "█", right = "█" },
