@@ -7,7 +7,6 @@ return {
         integrations = {
           cmp = true,
           gitsigns = true,
-          harpoon = true,
           illuminate = true,
           indent_blankline = {
             enabled = false,

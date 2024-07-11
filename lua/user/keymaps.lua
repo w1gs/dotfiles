@@ -2,10 +2,6 @@ local nnoremap = require("user.keymap_utils").nnoremap
 local vnoremap = require("user.keymap_utils").vnoremap
 local inoremap = require("user.keymap_utils").inoremap
 local tnoremap = require("user.keymap_utils").tnoremap
-local xnoremap = require("user.keymap_utils").xnoremap
-local harpoon_ui = require("harpoon.ui")
-local harpoon_mark = require("harpoon.mark")
-local illuminate = require("illuminate")
 local utils = require("user.utils")
 
 local M = {}
@@ -61,54 +57,39 @@ end)
 nnoremap("<leader>'", "<C-^>", { desc = "Switch to last buffer" })
 
 -- Save with leader key
-nnoremap("<leader>w", "<cmd>w<cr>", { silent = false })
+nnoremap("<leader>w", "<cmd>w<cr>", { silent = false, desc = "Save file" })
 
 -- Quit with leader key
-nnoremap("<leader>q", "<cmd>q<cr>", { silent = false })
+nnoremap("<leader>q", "<cmd>q<cr>", { silent = false, desc = "Quit" })
 
 -- Save and Quit with leader key
-nnoremap("<leader>z", "<cmd>wq<cr>", { silent = false })
+nnoremap("<leader>z", "<cmd>wq<cr>", { silent = false, desc = "Save and quit" })
 
 -- Map Oil to <leader>e
 nnoremap("<leader>e", function()
 	require("oil").toggle_float()
-end)
--- Center buffer while navigating
-nnoremap("<C-u>", "<C-u>zz")
-nnoremap("<C-d>", "<C-d>zz")
-nnoremap("{", "{zz")
-nnoremap("}", "}zz")
-nnoremap("N", "Nzz")
-nnoremap("n", "nzz")
-nnoremap("G", "Gzz")
-nnoremap("gg", "ggzz")
-nnoremap("<C-i>", "<C-i>zz")
-nnoremap("<C-o>", "<C-o>zz")
-nnoremap("%", "%zz")
-nnoremap("*", "*zz")
-nnoremap("#", "#zz")
+end, { desc = "Open oil" })
+-- -- Center buffer while navigating
+-- nnoremap("<C-u>", "<C-u>zz")
+-- nnoremap("<C-d>", "<C-d>zz")
+-- nnoremap("{", "{zz")
+-- nnoremap("}", "}zz")
+-- nnoremap("N", "Nzz")
+-- nnoremap("n", "nzz")
+-- nnoremap("G", "Gzz")
+-- nnoremap("gg", "ggzz")
+-- nnoremap("<C-i>", "<C-i>zz")
+-- nnoremap("<C-o>", "<C-o>zz")
+-- nnoremap("%", "%zz")
+-- nnoremap("*", "*zz")
+-- nnoremap("#", "#zz")
 
 -- Press 'S' for quick find/replace for the word under the cursor
-nnoremap("S", function()
+nnoremap("<leader>S", function()
 	local cmd = ":%s/<C-r><C-w>/<C-r><C-w>/gI<Left><Left><Left>"
 	local keys = vim.api.nvim_replace_termcodes(cmd, true, false, true)
 	vim.api.nvim_feedkeys(keys, "n", false)
-end)
-
--- Open Spectre for global find/replace
-nnoremap("<leader>S", function()
-	require("spectre").toggle()
-end)
-
--- Open Spectre for global find/replace for the word under the cursor in normal mode
-nnoremap("<leader>sw", function()
-	require("spectre").open_visual({ select_word = true })
-end, { desc = "Search current word" })
-
--- Open Spectre for global find/replace for the word under the cursor in visual mode
-vnoremap("<leader>sw", function()
-	require("spectre").open_visual({ select_word = true })
-end, { desc = "Search current word" })
+end, { desc = "Find and replace word under cursor" })
 
 -- Press 'H', 'L' to jump to start/end of a line (first/last char)
 nnoremap("L", "$")
@@ -118,126 +99,84 @@ nnoremap("H", "^")
 nnoremap("U", "<C-r>")
 
 -- Turn off highlighted results
-nnoremap("<leader>no", "<cmd>noh<cr>")
+nnoremap("<leader>no", "<cmd>noh<cr>", { desc = "Turn off highlighted results" })
 
--- Diagnostics
+-- -- Diagnostics
 
--- Goto next diagnostic of any severity
-nnoremap("]d", function()
-	vim.diagnostic.goto_next({})
-	vim.api.nvim_feedkeys("zz", "n", false)
-end)
+-- -- Goto next diagnostic of any severity
+-- nnoremap("]d", function()
+-- 	vim.diagnostic.goto_next({})
+-- 	vim.api.nvim_feedkeys("zz", "n", false)
+-- end)
 
--- Goto previous diagnostic of any severity
-nnoremap("[d", function()
-	vim.diagnostic.goto_prev({})
-	vim.api.nvim_feedkeys("zz", "n", false)
-end)
+-- -- Goto previous diagnostic of any severity
+-- nnoremap("[d", function()
+-- 	vim.diagnostic.goto_prev({})
+-- 	vim.api.nvim_feedkeys("zz", "n", false)
+-- end)
 
--- Goto next error diagnostic
-nnoremap("]e", function()
-	vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR })
-	vim.api.nvim_feedkeys("zz", "n", false)
-end)
+-- -- Goto next error diagnostic
+-- nnoremap("]e", function()
+-- 	vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR })
+-- 	vim.api.nvim_feedkeys("zz", "n", false)
+-- end)
 
--- Goto previous error diagnostic
-nnoremap("[e", function()
-	vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.ERROR })
-	vim.api.nvim_feedkeys("zz", "n", false)
-end)
+-- -- Goto previous error diagnostic
+-- nnoremap("[e", function()
+-- 	vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.ERROR })
+-- 	vim.api.nvim_feedkeys("zz", "n", false)
+-- end)
 
--- Goto next warning diagnostic
-nnoremap("]w", function()
-	vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.WARN })
-	vim.api.nvim_feedkeys("zz", "n", false)
-end)
+-- -- Goto next warning diagnostic
+-- nnoremap("]w", function()
+-- 	vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.WARN })
+-- 	vim.api.nvim_feedkeys("zz", "n", false)
+-- end)
 
--- Goto previous warning diagnostic
-nnoremap("[w", function()
-	vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.WARN })
-	vim.api.nvim_feedkeys("zz", "n", false)
-end)
+-- -- Goto previous warning diagnostic
+-- nnoremap("[w", function()
+-- 	vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.WARN })
+-- 	vim.api.nvim_feedkeys("zz", "n", false)
+-- end)
 
-nnoremap("<leader>d", function()
-	vim.diagnostic.open_float({
-		border = "rounded",
-	})
-end)
+-- nnoremap("<leader>d", function()
+-- 	vim.diagnostic.open_float({
+-- 		border = "rounded",
+-- 	})
+-- end)
 
 -- Place all dignostics into a qflist
-nnoremap("<leader>ld", vim.diagnostic.setqflist, { desc = "Quickfix [L]ist [D]iagnostics" })
+-- nnoremap("<leader>ld", vim.diagnostic.setqflist, { desc = "Quickfix [L]ist [D]iagnostics" })
 
--- Navigate to next qflist item
-nnoremap("<leader>cn", ":cnext<cr>zz")
+-- -- Navigate to next qflist item
+-- nnoremap("<leader>cn", ":cnext<cr>zz")
 
--- Navigate to previos qflist item
-nnoremap("<leader>cp", ":cprevious<cr>zz")
+-- -- Navigate to previos qflist item
+-- nnoremap("<leader>cp", ":cprevious<cr>zz")
 
--- Open the qflist
-nnoremap("<leader>co", ":copen<cr>zz")
+-- -- Open the qflist
+-- nnoremap("<leader>co", ":copen<cr>zz")
 
--- Close the qflist
-nnoremap("<leader>cc", ":cclose<cr>zz")
+-- -- Close the qflist
+-- nnoremap("<leader>cc", ":cclose<cr>zz")
 
 -- Map MaximizerToggle (szw/vim-maximizer) to leader-m
-nnoremap("<leader>m", ":MaximizerToggle<cr>")
+nnoremap("<leader>m", ":MaximizerToggle<cr>", { desc = "Maximizer toggle" })
 
 -- Resize split windows to be equal size
-nnoremap("<leader>=", "<C-w>=")
+nnoremap("<leader>=", "<C-w>=", { desc = "Resize split windows to equal sizes" })
 
 -- Press leader f to format
 nnoremap("<leader>f", ":Format<cr>")
 
 -- Press leader rw to rotate open windows
-nnoremap("<leader>rw", ":RotateWindows<cr>", { desc = "[R]otate [W]indows" })
+-- nnoremap("<leader>rw", ":RotateWindows<cr>", { desc = "[R]otate [W]indows" })
 
 -- Press gx to open the link under the cursor
-nnoremap("gx", ":sil !open <cWORD><cr>", { silent = true })
+nnoremap("gx", ":sil !open <cWORD><cr>", { silent = true, desc = "Open link under cursor" })
 
 -- TSC autocommand keybind to run TypeScripts tsc
 nnoremap("<leader>tc", ":TSC<cr>", { desc = "[T]ypeScript [C]ompile" })
-
--- Harpoon keybinds --
--- Open harpoon ui
-nnoremap("<leader>ho", function()
-	harpoon_ui.toggle_quick_menu()
-end)
-
--- Add current file to harpoon
-nnoremap("<leader>ha", function()
-	harpoon_mark.add_file()
-end)
-
--- Remove current file from harpoon
-nnoremap("<leader>hr", function()
-	harpoon_mark.rm_file()
-end)
-
--- Remove all files from harpoon
-nnoremap("<leader>hc", function()
-	harpoon_mark.clear_all()
-end)
-
--- Quickly jump to harpooned files
-nnoremap("<leader>1", function()
-	harpoon_ui.nav_file(1)
-end)
-
-nnoremap("<leader>2", function()
-	harpoon_ui.nav_file(2)
-end)
-
-nnoremap("<leader>3", function()
-	harpoon_ui.nav_file(3)
-end)
-
-nnoremap("<leader>4", function()
-	harpoon_ui.nav_file(4)
-end)
-
-nnoremap("<leader>5", function()
-	harpoon_ui.nav_file(5)
-end)
 
 -- Git keymaps --
 nnoremap("<leader>gb", ":Gitsigns toggle_current_line_blame<cr>")
@@ -270,8 +209,8 @@ end, { desc = "[S]earch [F]iles" })
 nnoremap("<leader>sh", require("telescope.builtin").help_tags, { desc = "[S]earch [H]elp" })
 nnoremap("<leader>sw", require("telescope.builtin").grep_string, { desc = "[S]earch current [W]ord" })
 nnoremap("<leader>sg", require("telescope.builtin").live_grep, { desc = "[S]earch by [G]rep" })
-nnoremap("<leader>sd", require("telescope.builtin").diagnostics, { desc = "[S]earch [D]iagnostics" })
-nnoremap("<leader>sd", require("telescope.builtin").git_files, { desc = "[S]earch [D]iagnostics" })
+-- nnoremap("<leader>sd", require("telescope.builtin").diagnostics, { desc = "[S]earch [D]iagnostics" })
+-- nnoremap("<leader>sd", require("telescope.builtin").git_files, { desc = "[S]earch [D]iagnostics" })
 
 nnoremap("<leader>sc", function()
 	require("telescope.builtin").commands(require("telescope.themes").get_dropdown({
@@ -285,11 +224,11 @@ nnoremap("<leader>/", function()
 	}))
 end, { desc = "[/] Fuzzily search in current buffer]" })
 
-nnoremap("<leader>ss", function()
-	require("telescope.builtin").spell_suggest(require("telescope.themes").get_dropdown({
-		previewer = false,
-	}))
-end, { desc = "[S]earch [S]pelling suggestions" })
+-- nnoremap("<leader>ss", function()
+-- 	require("telescope.builtin").spell_suggest(require("telescope.themes").get_dropdown({
+-- 		previewer = false,
+-- 	}))
+-- end, { desc = "[S]earch [S]pelling suggestions" })
 
 -- LSP Keybinds (exports a function to be used in ../../after/plugin/lsp.lua b/c we need a reference to the current buffer) --
 M.map_lsp_keybinds = function(buffer_number)
@@ -311,17 +250,17 @@ M.map_lsp_keybinds = function(buffer_number)
 		{ desc = "LSP: [G]oto [I]mplementation", buffer = buffer_number }
 	)
 
-	nnoremap(
-		"<leader>bs",
-		require("telescope.builtin").lsp_document_symbols,
-		{ desc = "LSP: [B]uffer [S]ymbols", buffer = buffer_number }
-	)
+	-- nnoremap(
+	-- 	"<leader>bs",
+	-- 	require("telescope.builtin").lsp_document_symbols,
+	-- 	{ desc = "LSP: [B]uffer [S]ymbols", buffer = buffer_number }
+	-- )
 
-	nnoremap(
-		"<leader>ps",
-		require("telescope.builtin").lsp_workspace_symbols,
-		{ desc = "LSP: [P]roject [S]ymbols", buffer = buffer_number }
-	)
+	-- nnoremap(
+	-- 	"<leader>ps",
+	-- 	require("telescope.builtin").lsp_workspace_symbols,
+	-- 	{ desc = "LSP: [P]roject [S]ymbols", buffer = buffer_number }
+	-- )
 
 	-- See `:help K` for why this keymap
 	nnoremap("K", vim.lsp.buf.hover, { desc = "LSP: Hover Documentation", buffer = buffer_number })
@@ -334,27 +273,22 @@ M.map_lsp_keybinds = function(buffer_number)
 end
 
 -- Symbol Outline keybind
-nnoremap("<leader>so", ":SymbolsOutline<cr>")
+-- nnoremap("<leader>so", ":SymbolsOutline<cr>")
 
 -- Vim Illuminate keybinds
-nnoremap("<leader>]", function()
-	illuminate.goto_next_reference()
-	vim.api.nvim_feedkeys("zz", "n", false)
-end, { desc = "Illuminate: Goto next reference" })
+-- nnoremap("<leader>]", function()
+-- 	illuminate.goto_next_reference()
+-- 	vim.api.nvim_feedkeys("zz", "n", false)
+-- end, { desc = "Illuminate: Goto next reference" })
 
-nnoremap("<leader>[", function()
-	illuminate.goto_prev_reference()
-	vim.api.nvim_feedkeys("zz", "n", false)
-end, { desc = "Illuminate: Goto previous reference" })
-
--- Open Copilot panel
-nnoremap("<leader>oc", function()
-	require("copilot.panel").open({})
-end, { desc = "[O]pen [C]opilot panel" })
+-- nnoremap("<leader>[", function()
+-- 	illuminate.goto_prev_reference()
+-- 	vim.api.nvim_feedkeys("zz", "n", false)
+-- end, { desc = "Illuminate: Goto previous reference" })
 
 -- nvim-ufo keybinds
-nnoremap("zR", require("ufo").openAllFolds)
-nnoremap("zM", require("ufo").closeAllFolds)
+nnoremap("zR", require("ufo").openAllFolds, { desc = "Open all folds (UFO)" })
+nnoremap("zM", require("ufo").closeAllFolds, { desc = "Close all folds (UFO)" })
 
 -- Insert --
 -- Map jj to <esc>
@@ -368,28 +302,9 @@ vnoremap("<space>", "<nop>")
 vnoremap("L", "$<left>")
 vnoremap("H", "^")
 
--- Paste without losing the contents of the register
-xnoremap("<leader>p", '"_dP')
-
--- Move selected text up/down in visual mode
-vnoremap("<A-j>", ":m '>+1<CR>gv=gv")
-vnoremap("<A-k>", ":m '<-2<CR>gv=gv")
-
--- Reselect the last visual selection
-xnoremap("<<", function()
-	vim.cmd("normal! <<")
-	vim.cmd("normal! gv")
-end)
-
-xnoremap(">>", function()
-	vim.cmd("normal! >>")
-	vim.cmd("normal! gv")
-end)
-
 -- Terminal --
 -- Enter normal mode while in a terminal
 tnoremap("<esc>", [[<C-\><C-n>]])
-tnoremap("jj", [[<C-\><C-n>]])
 
 -- Window navigation from terminal
 tnoremap("<C-h>", [[<Cmd>wincmd h<CR>]])
