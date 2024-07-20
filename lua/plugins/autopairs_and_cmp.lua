@@ -68,7 +68,7 @@ return {
 				}),
 				-- sources for autocompletion
 				sources = cmp.config.sources({
-					{ name = "copilot" }, -- Copilot suggestions
+					{ name = "copilot", group_index = 2 }, -- Copilot suggestions
 					{ name = "nvim_lsp" }, -- lsp
 					{ name = "luasnip", max_item_count = 3 }, -- snippets
 					{ name = "buffer", max_item_count = 5 }, -- text within current buffer
@@ -81,6 +81,7 @@ return {
 						mode = "symbol_text",
 						maxwidth = 50,
 						ellipsis_char = "...",
+						symbol_map = { Copilot = "" },
 					}),
 				},
 				experimental = {
