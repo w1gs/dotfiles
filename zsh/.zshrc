@@ -13,7 +13,7 @@ ENABLE_CORRECTION="true"
 plugins=(git fast-syntax-highlighting zoxide tmux)
 
 # Path and environment variables
-export PATH=$PATH:$HOME/go/bin:$HOME/.config/emacs/bin:$(brew --prefix openssh)/bin
+export PATH=$PATH:$HOME/go/bin:$HOME/.config/emacs/bin:$(brew --prefix openssh)/bin:/usr/bin
 export GOPATH=$HOME/go
 export EDITOR='nvim'
 export PYTHONUNBUFFERED=1
